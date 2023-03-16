@@ -18,7 +18,6 @@ int lenghtNumber5 =  sizeof(number5)/sizeof(number5[0]);
 int number6[] = {diceDiagonal1, diceDiagonal2, diceMiddleLeds};
 int lenghtNumber6 =  sizeof(number6)/sizeof(number6[0]);
 
-
 void turnOffLeds (int dice[], int lenghtDice){
   for (int position = 0; position < lenghtDice; position++) {
     digitalWrite(dice[position], LOW);
@@ -30,6 +29,15 @@ void turnOnLeds (int dice[], int lenghtDice){
     digitalWrite(dice[position], HIGH);
   };
 };
+
+void iterateLeds(int dice[], int lenghtDice) {
+  //ITERATOR to test all output pins
+  for (int position = 0; position < lenghtDice; position++) {
+    digitalWrite(dice[position], HIGH);
+    delay(1000);
+    digitalWrite(dice[position], LOW);
+  };
+}
 
 void testDice () {
   turnOffLeds(dice,lenghtDice);
@@ -67,16 +75,6 @@ void testDice () {
   turnOffLeds(dice,lenghtDice);
   delay(1000);
 }
-
-void iterateLeds(int dice[], int lenghtDice) {
-  //ITERATOR to test all output pins
-  for (int position = 0; position < lenghtDice; position++) {
-    digitalWrite(dice[position], HIGH);
-    delay(1000);
-    digitalWrite(dice[position], LOW);
-  };
-}
-
 
 void setup() {
   // put your setup code here, to run once:
