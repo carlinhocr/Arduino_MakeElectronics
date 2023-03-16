@@ -50,6 +50,7 @@ void flashLeds(int dice[], int lenghtDice, int flashTimes = 5, int delayLed = 10
 
 void lightNumber(int dice[], int lenghtDice, int number){
   switch (number)  {
+   
     case 1:
         turnOnLeds(number1, lenghtNumber1);
         break;
@@ -70,13 +71,18 @@ void lightNumber(int dice[], int lenghtDice, int number){
         break;
     default:
         //do nothing
+        Serial.println("Not a valid dice number");
+        Serial.println(number);
         break;
   };
 }
 
-void iterateNumbers(int dice[], int lenghtDice){
+void iterateNumbers(int dice[], int lenghtDice, int delayNumbers = 1000){
   for (int position = 1; position < 7; position++) {
     lightNumber(dice,lenghtDice,position);
+    delay(delayNumbers);
+    turnOffLeds(dice,lenghtDice);
+    delay(delayNumbers/2);
   };
 }
 
@@ -86,6 +92,8 @@ void testDice () {
   iterateLeds(dice, lenghtDice);
   delay(1000);
   iterateNumbers(dice, lenghtDice);
+  delay(1000);
+  iterateNumbers(dice, lenghtDice, 150);
   delay(1000);
   turnOffLeds(dice,lenghtDice);
   delay(1000);
