@@ -39,38 +39,53 @@ void iterateLeds(int dice[], int lenghtDice) {
   };
 }
 
+void flashLeds(int dice[], int lenghtDice, int flashTimes = 5, int delayLed = 100){
+  for (int i = 0; i < flashTimes; i++){
+    turnOnLeds(dice,lenghtDice);
+    delay(delayLed);
+    turnOffLeds(dice,lenghtDice);
+    delay(delayLed);;
+  };
+}
+
+void lightNumber(int dice[], int lenghtDice, int number){
+  switch (number)  {
+    case 1:
+        turnOnLeds(number1, lenghtNumber1);
+        break;
+    case 2:
+        turnOnLeds(number2, lenghtNumber2);
+        break;
+    case 3:
+        turnOnLeds(number3, lenghtNumber3);
+        break;
+    case 4:
+        turnOnLeds(number4, lenghtNumber4);
+        break;
+    case 5:
+        turnOnLeds(number5, lenghtNumber5);
+        break;
+    case 6:
+        turnOnLeds(number6, lenghtNumber6);
+        break;
+    default:
+        //do nothing
+        break;
+  };
+}
+
+void iterateNumbers(int dice[], int lenghtDice){
+  for (int position = 1; position < 7; position++) {
+    lightNumber(dice,lenghtDice,position);
+  };
+}
+
 void testDice () {
-  turnOffLeds(dice,lenghtDice);
-  delay(1000);
-  turnOnLeds(dice,lenghtDice);
-  delay(1000);
-  turnOffLeds(dice,lenghtDice);
+  flashLeds(dice,lenghtDice,4,200);
   delay(1000);
   iterateLeds(dice, lenghtDice);
   delay(1000);
-  turnOffLeds(dice,lenghtDice);
-  delay(1000);
-  turnOnLeds(number1, lenghtNumber1);
-  delay(1000);
-  turnOffLeds(dice,lenghtDice);
-  delay(1000);
-  turnOnLeds(number2, lenghtNumber2);
-  delay(1000);
-  turnOffLeds(dice,lenghtDice);
-  delay(1000);
-  turnOnLeds(number3, lenghtNumber3);
-  delay(1000);
-  turnOffLeds(dice,lenghtDice);
-  delay(1000);
-  turnOnLeds(number4, lenghtNumber4);
-  delay(1000);
-  turnOffLeds(dice,lenghtDice);
-  delay(1000);
-  turnOnLeds(number5, lenghtNumber5);
-  delay(1000);
-  turnOffLeds(dice,lenghtDice);
-  delay(1000);
-  turnOnLeds(number6, lenghtNumber6);
+  iterateNumbers(dice, lenghtDice);
   delay(1000);
   turnOffLeds(dice,lenghtDice);
   delay(1000);
