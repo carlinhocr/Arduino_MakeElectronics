@@ -21,6 +21,28 @@ void turnOffLeds (int dice[]){
   };
 };
 
+void testDice () {
+  turnOffLeds(dice);
+  delay(1000);
+  turnOnLeds(dice);
+  delay(1000);
+  iterateLeds(dice);
+  delay(1000);
+  turnOffLeds(dice);
+  delay(1000);
+  turnOnLeds(number1);
+  delay(1000);
+  turnOnLeds(number2);
+  delay(1000);
+  turnOnLeds(number3);
+  delay(1000);
+  turnOnLeds(number4);
+  delay(1000);
+  turnOnLeds(number5);
+  delay(1000);
+  turnOnLeds(number6);
+}
+
 void turnOnLeds (int dice[]){
   int lenghtDice =  sizeof(dice) / sizeof(int);
   for (int position = 0; position < lenghtDice; position++) {
@@ -50,24 +72,6 @@ void setup() {
 }
 
 void loop() {
-  turnOffLeds(dice);
-  delay(1000);
-  turnOnLeds(dice);
-  delay(1000);
-  iterateLeds(dice);
-  delay(1000);
-  turnOffLeds(dice);
-  delay(1000);
-  turnOnLeds(number1);
-  delay(1000);
-  turnOnLeds(number2);
-  delay(1000);
-  turnOnLeds(number3);
-  delay(1000);
-  turnOnLeds(number4);
-  delay(1000);
-  turnOnLeds(number5);
-  delay(1000);
-  turnOnLeds(number6);        
+  testDice();      
 }
 
