@@ -1,8 +1,13 @@
-int pin = 0;
-int diceDiagonal1 = 3;
-int diceDiagonal2 = 4;
-int diceMiddleLeds = 5;
-int diceCenterLed = 6;
+#define diceButton 2
+#define diceDiagonal1 3
+#define diceDiagonal2 4
+#define diceMiddleLeds 5
+#define diceCenterLed  6
+// int diceButton = 2;
+// int diceDiagonal1 = 3;
+// int diceDiagonal2 = 4;
+// int diceMiddleLeds = 5;
+// int diceCenterLed = 6;
 int dice[] = {diceDiagonal1,diceDiagonal2,diceMiddleLeds,diceCenterLed};
 int number1[] = {diceCenterLed};
 int number2[] = {diceDiagonal1};
@@ -64,11 +69,11 @@ void iterateLeds(int dice[]) {
 
 void setup() {
   // put your setup code here, to run once:
-  pinMode(2, INPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
+  pinMode(diceButton, INPUT);
+  pinMode(diceDiagonal1, OUTPUT);
+  pinMode(diceDiagonal2, OUTPUT);
+  pinMode(diceMiddleLeds, OUTPUT);
+  pinMode(diceCenterLed, OUTPUT);
 }
 
 void loop() {
