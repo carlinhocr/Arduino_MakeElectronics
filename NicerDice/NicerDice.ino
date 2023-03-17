@@ -91,8 +91,6 @@ void throwDice() {
   int throwTimes = random(1,4);
   Serial.println("diceNumber");
   Serial.println(diceNumber);
-  Serial.println("diceNumber");
-  Serial.println(diceNumber);
   //light up dice randomly
   
   //turn on dice number
@@ -124,6 +122,8 @@ void setup() {
   pinMode(diceDiagonal2, OUTPUT);
   pinMode(diceMiddleLeds, OUTPUT);
   pinMode(diceCenterLed, OUTPUT);
+  randomSeed(analogRead(2)); //to have different randoms numbers each time the sketch runs
+  //Serial.println(analogRead(2));
 }
 
 void loop() {
