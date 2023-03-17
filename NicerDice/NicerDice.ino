@@ -17,7 +17,6 @@ int number5[] = {diceDiagonal1, diceDiagonal2, diceCenterLed};
 int lenghtNumber5 =  sizeof(number5)/sizeof(number5[0]);
 int number6[] = {diceDiagonal1, diceDiagonal2, diceMiddleLeds};
 int lenghtNumber6 =  sizeof(number6)/sizeof(number6[0]);
-long ignore = 0;
 
 void turnOffLeds (int dice[], int lenghtDice){
   for (int position = 0; position < lenghtDice; position++) {
@@ -104,21 +103,13 @@ void throwDice() {
 
 void checkButton () {
   delay (50);
-  Serial.println("Inside Check Button");
-  Serial.println("diceButton");
-  Serial.println(digitalRead(diceButton));
   while (digitalRead(diceButton) == LOW) {
     delay(100);
-    Serial.println("Inside While LOW");
-    Serial.println(digitalRead(diceButton));
   };
   delay (50);
   while (digitalRead(diceButton) == HIGH) {
         delay(100);
-    Serial.println("Inside While HIGH");
-    Serial.println(digitalRead(diceButton));
   };
-  ignore = 2000 + millis();
 }
 
 void testDice () {
@@ -144,21 +135,12 @@ void setup() {
   pinMode(diceCenterLed, OUTPUT);
   randomSeed(analogRead(2)); //to have different randoms numbers each time the sketch runs
   //Serial.println(analogRead(2));
-  ignore = 2000 + millis();
-  Serial.println(digitalRead(diceButton));
 }
 
 void loop() {
-  //testDice();    
-  checkButton();
-  throwDice();  
-
-  delay(200);
-  Serial.println(digitalRead(diceButton));
-  Serial.println(digitalRead(millis()));
-  Serial.println(digitalRead(ignore));
-  if (digitalRead(diceButton) == LOW) {
-    checkButton();
-  };   
+ { 
+   checkButton();
+   throwDice(); 
+  };     
 }
 
