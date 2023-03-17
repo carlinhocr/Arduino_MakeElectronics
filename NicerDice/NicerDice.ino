@@ -86,6 +86,23 @@ void iterateNumbers(int dice[], int lenghtDice, int delayNumbers = 1000){
   };
 }
 
+void throwDice() {
+  int diceNumber = random(1,7);
+  int throwTimes = random(1,4);
+  Serial.println("diceNumber");
+  Serial.println(diceNumber);
+  Serial.println("diceNumber");
+  Serial.println(diceNumber);
+  //light up dice randomly
+  
+  //turn on dice number
+  for (int i = 0; i < throwTimes; i++){
+    iterateNumbers(dice,lenghtDice,200);
+  }  
+  lightNumber(dice,lenghtDice,diceNumber);
+  delay(10000);
+}
+
 void testDice () {
   flashLeds(dice,lenghtDice,4,200);
   delay(1000);
@@ -110,6 +127,7 @@ void setup() {
 }
 
 void loop() {
-  testDice();      
+  //testDice();    
+  throwDice();  
 }
 
