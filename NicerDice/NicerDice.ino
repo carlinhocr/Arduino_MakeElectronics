@@ -137,10 +137,14 @@ void setup() {
   //Serial.println(analogRead(2));
 }
 
+void rollDice() {
+  checkButton();
+  throwDice(); 
+}
+
 void loop() {
  { 
-   checkButton();
-   throwDice(); 
+  rollDice();
   };     
 }
 
