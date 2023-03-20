@@ -23,18 +23,20 @@ private:
         void turnOnLeds (int dice[], int lenghtDice);
         void iterateLeds(int dice[], int lenghtDice);
         void flashLeds(int dice[], int lenghtDice, int flashTimes = 5, int delayLed = 100);
-        void lightNumber(int dice[], int lenghtDice, int number);
+        void lightNumber(int number);
         void iterateNumbers(int dice[], int lenghtDice, int delayNumbers = 1000);
         void testDice ();
         void checkButton();
         void throwDice();
-        int number1[];
-        int number2[];
-        int number3[];
-        int number4[];
-        int number5[];
-        int number6[];
-        int _dice[];
+        int _dice[4];
+        int number1[1];
+        int number2[1];
+        int number3[2];
+        int number4[2];
+        int number5[3];
+        // int number6[3];
+        int number6[3] = {_diceDiagonal1,_diceDiagonal2,_diceMiddleLeds};
+
 
 };
 #endif

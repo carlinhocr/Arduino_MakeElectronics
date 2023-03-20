@@ -7,63 +7,88 @@ MyDice::MyDice(int diceButton, int diceDiagonal1, int diceDiagonal2,
         pinMode(diceDiagonal2, OUTPUT);
         pinMode(diceMiddleLeds, OUTPUT);
         pinMode(diceCenterLed, OUTPUT);
-        randomSeed(analogRead(2)); //to have different randoms numbers each time the sketch runs
-        int _diceButton = diceButton;
-        int _diceDiagonal1 = diceDiagonal1;
-        int _diceDiagonal2 = diceDiagonal2;
-        int _diceMiddleLeds = diceMiddleLeds;
-        int _diceCenterLed = diceCenterLed;
-        int _dice[] = {_diceDiagonal1,_diceDiagonal2,_diceMiddleLeds,_diceCenterLed};
-        int lenghtDice =  sizeof(_dice)/sizeof(_dice[0]);
-        int number1[] = {_diceCenterLed};
-        int lenghtNumber1 =  sizeof(number1)/sizeof(number1[0]);
-        int number2[] = {_diceDiagonal1};
-        int lenghtNumber2 =  sizeof(number2)/sizeof(number2[0]);
-        int number3[] = {_diceCenterLed, _diceDiagonal1};
-        int lenghtNumber3 =  sizeof(number3)/sizeof(number3[0]);
-        int number4[] = {_diceDiagonal1, _diceDiagonal2};
-        int lenghtNumber4 =  sizeof(number4)/sizeof(number4[0]);
-        int number5[] = {_diceDiagonal1, _diceDiagonal2, _diceCenterLed};
-        int lenghtNumber5 =  sizeof(number5)/sizeof(number5[0]);
-        int number6[] = {_diceDiagonal1, _diceDiagonal2, _diceMiddleLeds};
-        int lenghtNumber6 =  sizeof(number6)/sizeof(number6[0]);
+        Serial.println("hola");
+        lenghtDice =  4;
+        lenghtNumber1 =  1;
+        lenghtNumber2 =  1;
+        lenghtNumber3 =  2;
+        lenghtNumber4 =  2;
+        lenghtNumber5 =  3;
+        lenghtNumber6 =  3;
+        _diceButton = diceButton;
+        _diceDiagonal1 = diceDiagonal1;
+        _diceDiagonal2 = diceDiagonal2;
+        _diceMiddleLeds = diceMiddleLeds;
+        _diceCenterLed = diceCenterLed;
+        _dice[0] = _diceDiagonal1;
+        _dice[1] = _diceDiagonal2;
+        _dice[2] = _diceMiddleLeds;
+        _dice[3] = _diceCenterLed;
+        number1[0] = _diceCenterLed;
+        number2[0] = _diceDiagonal1;
+        number3[0] = _diceCenterLed;
+        number3[1] = _diceDiagonal1;
+        number4[0] = _diceDiagonal1;
+        number4[1] = _diceDiagonal2;
+        number5[0] = _diceDiagonal1;
+        number5[1] = _diceDiagonal2;
+        number5[2] = _diceCenterLed;
+        number6[0] = _diceDiagonal1;
+        number6[1] = _diceDiagonal2;
+        number6[2] = _diceMiddleLeds;
+
     }
+
 void MyDice::rollDice(){
+  //iterateLeds(_dice,lenghtDice);
+  //flashLeds(_dice,lenghtDice);
   checkButton();
   throwDice(); 
 };
 
-void MyDice::turnOffLeds (int dice[], int lenghtDice){
-  for (int position = 0; position < lenghtDice; position++) {
-    digitalWrite(dice[position], LOW);
+void MyDice::checkButton() {
+  delay (50);
+  while (digitalRead(_diceButton) == LOW) {
+    delay(100);
+  };
+  delay (50);
+  while (digitalRead(_diceButton) == HIGH) {
+        delay(100);
+  };
+  randomSeed(millis());
+}
+
+void MyDice::turnOffLeds (int toLight[], int lenghtToLight){
+  for (int position = 0; position < lenghtToLight; position++) {
+    digitalWrite(toLight[position], LOW);
   };
 };
 
-void MyDice::turnOnLeds (int dice[], int lenghtDice){
-  for (int position = 0; position < lenghtDice; position++) {
-    digitalWrite(dice[position], HIGH);
+void MyDice::turnOnLeds (int toLight[], int lenghtToLight){
+  for (int position = 0; position < lenghtToLight; position++) {
+    digitalWrite(toLight[position], HIGH);
   };
 };
 
-void MyDice::iterateLeds(int dice[], int lenghtDice) {
+void MyDice::iterateLeds(int toLight[], int lenghtToLight) {
   //ITERATOR to test all output pins
-  for (int position = 0; position < lenghtDice; position++) {
-    digitalWrite(dice[position], HIGH);
+  for (int position = 0; position < lenghtToLight; position++) {
+    digitalWrite(toLight[position], HIGH);
     delay(1000);
-    digitalWrite(dice[position], LOW);
+    digitalWrite(toLight[position], LOW);
   };
 }
 
-void MyDice::flashLeds(int dice[], int lenghtDice, int flashTimes = 5, int delayLed = 100){
+void MyDice::flashLeds(int toLight[], int lenghtToLight, int flashTimes = 5, int delayLed = 100){
   for (int i = 0; i < flashTimes; i++){
-    turnOnLeds(dice,lenghtDice);
+    turnOnLeds(toLight,lenghtToLight);
     delay(delayLed);
-    turnOffLeds(dice,lenghtDice);
+    turnOffLeds(toLight,lenghtToLight);
     delay(delayLed);;
   };
 }
 
-void MyDice::lightNumber(int dice[], int lenghtDice, int number){
+void MyDice::lightNumber(int number){
   switch (number)  {
    
     case 1:
@@ -92,39 +117,29 @@ void MyDice::lightNumber(int dice[], int lenghtDice, int number){
   };
 }
 
-void MyDice::iterateNumbers(int dice[], int lenghtDice, int delayNumbers = 1000){
+void MyDice::iterateNumbers(int toLight[], int lenghtToLight, int delayNumbers = 1000){
   for (int position = 1; position < 7; position++) {
-    lightNumber(dice,lenghtDice,position);
+    lightNumber(position);
     delay(delayNumbers);
-    turnOffLeds(dice,lenghtDice);
+    turnOffLeds(toLight,lenghtToLight);
     delay(delayNumbers/2);
   };
 }
 
 void MyDice::throwDice() {
+  //light up dice randomly
+  //turn on dice number
+  Serial.println("En Throw dice");
+  randomSeed(millis()); //to have different randoms numbers each time the sketch runs
   int diceNumber = random(1,7);
   int throwTimes = random(1,4);
   Serial.println("diceNumber");
   Serial.println(diceNumber);
-  //light up dice randomly
-  
-  //turn on dice number
   for (int i = 0; i < throwTimes; i++){
     iterateNumbers(_dice,lenghtDice,200);
   }  
-  lightNumber(_dice,lenghtDice,diceNumber);
+  lightNumber(diceNumber);
   delay(20);
-}
-
-void MyDice::checkButton () {
-  delay (50);
-  while (digitalRead(_diceButton) == LOW) {
-    delay(100);
-  };
-  delay (50);
-  while (digitalRead(_diceButton) == HIGH) {
-        delay(100);
-  };
 }
 
 void MyDice::testDice () {
