@@ -11,7 +11,7 @@ MyDice::MyDice(int diceButton, int diceDiagonal1, int diceDiagonal2,
         int _diceButton = diceButton;
         int _diceDiagonal1 = diceDiagonal1;
         int _diceDiagonal2 = diceDiagonal2;
-        int _diceMiddleLedsint = diceMiddleLeds;
+        int _diceMiddleLeds = diceMiddleLeds;
         int _diceCenterLed = diceCenterLed;
         int _dice[] = {_diceDiagonal1,_diceDiagonal2,_diceMiddleLeds,_diceCenterLed};
         int lenghtDice =  sizeof(_dice)/sizeof(_dice[0]);
@@ -110,32 +110,32 @@ void MyDice::throwDice() {
   
   //turn on dice number
   for (int i = 0; i < throwTimes; i++){
-    iterateNumbers(dice,lenghtDice,200);
+    iterateNumbers(_dice,lenghtDice,200);
   }  
-  lightNumber(dice,lenghtDice,diceNumber);
+  lightNumber(_dice,lenghtDice,diceNumber);
   delay(20);
 }
 
 void MyDice::checkButton () {
   delay (50);
-  while (digitalRead(diceButton) == LOW) {
+  while (digitalRead(_diceButton) == LOW) {
     delay(100);
   };
   delay (50);
-  while (digitalRead(diceButton) == HIGH) {
+  while (digitalRead(_diceButton) == HIGH) {
         delay(100);
   };
 }
 
 void MyDice::testDice () {
-  flashLeds(dice,lenghtDice,4,200);
+  flashLeds(_dice,lenghtDice,4,200);
   delay(1000);
-  iterateLeds(dice, lenghtDice);
+  iterateLeds(_dice, lenghtDice);
   delay(1000);
-  iterateNumbers(dice, lenghtDice);
+  iterateNumbers(_dice, lenghtDice);
   delay(1000);
-  iterateNumbers(dice, lenghtDice, 150);
+  iterateNumbers(_dice, lenghtDice, 150);
   delay(1000);
-  turnOffLeds(dice,lenghtDice);
+  turnOffLeds(_dice,lenghtDice);
   delay(1000);
 }

@@ -10,7 +10,7 @@ private:
         int _diceButton;
         int _diceDiagonal1;
         int _diceDiagonal2;
-        int _diceMiddleLedsint;
+        int _diceMiddleLeds;
         int _diceCenterLed;
         int lenghtDice;
         int lenghtNumber1;
@@ -26,6 +26,8 @@ private:
         void lightNumber(int dice[], int lenghtDice, int number);
         void iterateNumbers(int dice[], int lenghtDice, int delayNumbers = 1000);
         void testDice ();
+        void checkButton();
+        void throwDice();
         int number1[];
         int number2[];
         int number3[];
