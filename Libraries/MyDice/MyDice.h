@@ -8,6 +8,7 @@ public:
         void rollDice();
         void throwDice();
         void turnOffDice();
+        void lightNumber(int number);
 private:
         int _diceButton;
         int _diceDiagonal1;
@@ -25,7 +26,6 @@ private:
         void turnOnLeds (int dice[], int lenghtDice);
         void iterateLeds(int dice[], int lenghtDice);
         void flashLeds(int dice[], int lenghtDice, int flashTimes = 5, int delayLed = 100);
-        void lightNumber(int number);
         void iterateNumbers(int dice[], int lenghtDice, int delayNumbers = 1000);
         void testDice ();
         void checkButton();
