@@ -5,8 +5,22 @@
 // diceMiddleLeds=5
 // diceCenterLed=4);
 
-//MyDice dice1(2,6,3,5,4);
+int _diceButton=2;
+
+MyDice diceRed(2,6,3,5,4);
 MyDice diceGreen(2,7,8,9,10);
+
+void checkButton() {
+  delay (50);
+  while (digitalRead(_diceButton) == LOW) {
+    delay(100);
+  };
+  delay (50);
+  while (digitalRead(_diceButton) == HIGH) {
+        delay(100);
+  };
+  randomSeed(millis());
+}
 
 void setup() {
   // put your setup code here, to run once:
@@ -24,5 +38,11 @@ void setup() {
 void loop() {
   //Serial.println(digitalRead(2));
   //dice1.rollDice();
-  diceGreen.rollDice();
+  Serial.println("antes de Checkbutton");
+  checkButton();
+  Serial.println("despues de Checkbutton");
+  diceRed.turnOffDice();
+  diceGreen.turnOffDice();
+  diceRed.throwDice();
+  diceGreen.throwDice();
 }
