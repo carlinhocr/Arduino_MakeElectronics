@@ -6,6 +6,8 @@ public:
         MyDice(int diceButton, int diceDiagonal1, int diceDiagonal2,
         int diceMiddleLeds, int diceCenterLed);
         void rollDice();
+        void throwDice();
+        void turnOffDice();
 private:
         int _diceButton;
         int _diceDiagonal1;
@@ -27,15 +29,13 @@ private:
         void iterateNumbers(int dice[], int lenghtDice, int delayNumbers = 1000);
         void testDice ();
         void checkButton();
-        void throwDice();
         int _dice[4];
         int number1[1];
         int number2[1];
         int number3[2];
         int number4[2];
         int number5[3];
-        // int number6[3];
-        int number6[3] = {_diceDiagonal1,_diceDiagonal2,_diceMiddleLeds};
+        int number6[3];
 
 
 };

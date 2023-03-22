@@ -46,6 +46,22 @@ void MyDice::rollDice(){
   throwDice(); 
 };
 
+void MyDice::throwDice() {
+  //light up dice randomly
+  //turn on dice number
+  Serial.println("En Throw dice");
+  randomSeed(millis()); //to have different randoms numbers each time the sketch runs
+  int diceNumber = random(1,7);
+  int throwTimes = random(1,4);
+  Serial.println("diceNumber");
+  Serial.println(diceNumber);
+  for (int i = 0; i < throwTimes; i++){
+    iterateNumbers(_dice,lenghtDice,200);
+  }  
+  lightNumber(diceNumber);
+  delay(20);
+}
+
 void MyDice::checkButton() {
   delay (50);
   while (digitalRead(_diceButton) == LOW) {
@@ -56,6 +72,10 @@ void MyDice::checkButton() {
         delay(100);
   };
   randomSeed(millis());
+}
+
+void MyDice::turnOffDice(){
+  turnOffLeds(_dice,lenghtDice);
 }
 
 void MyDice::turnOffLeds (int toLight[], int lenghtToLight){
@@ -118,28 +138,14 @@ void MyDice::lightNumber(int number){
 }
 
 void MyDice::iterateNumbers(int toLight[], int lenghtToLight, int delayNumbers = 1000){
+  turnOffLeds(toLight,lenghtToLight);
+  delay(300);
   for (int position = 1; position < 7; position++) {
     lightNumber(position);
     delay(delayNumbers);
     turnOffLeds(toLight,lenghtToLight);
     delay(delayNumbers/2);
   };
-}
-
-void MyDice::throwDice() {
-  //light up dice randomly
-  //turn on dice number
-  Serial.println("En Throw dice");
-  randomSeed(millis()); //to have different randoms numbers each time the sketch runs
-  int diceNumber = random(1,7);
-  int throwTimes = random(1,4);
-  Serial.println("diceNumber");
-  Serial.println(diceNumber);
-  for (int i = 0; i < throwTimes; i++){
-    iterateNumbers(_dice,lenghtDice,200);
-  }  
-  lightNumber(diceNumber);
-  delay(20);
 }
 
 void MyDice::testDice () {
