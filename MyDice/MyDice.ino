@@ -22,6 +22,47 @@ void checkButton() {
   randomSeed(millis());
 }
 
+void iterateNumbers(){
+  diceRed.turnOffDice();
+  diceGreen.turnOffDice();
+  delay(300);
+  for (int position = 1; position < 7; position++) {
+    diceRed.lightNumber(position);
+    diceGreen.lightNumber(position);
+    delay(200);
+    diceRed.turnOffDice();
+    diceGreen.turnOffDice();
+    delay(200);
+  };
+}
+
+void throwDice() {
+  //light up dice randomly
+  //turn on dice number
+  Serial.println("En Throw dice");
+  randomSeed(millis()); //to have different randoms numbers each time the sketch runs
+  int diceNumberRed = random(1,7);
+  int diceNumberGreen = random(1,7);
+  int throwTimes = random(1,4);
+  for (int i = 0; i < throwTimes; i++){
+    iterateNumbers();
+  }  
+  diceRed.lightNumber(diceNumberRed);
+  diceGreen.lightNumber(diceNumberGreen);
+
+  delay(20);
+}
+
+void twoDiceConcurrently(){
+
+  checkButton();
+  throwDice();
+}
+
+void oneDiceWithButton(){
+  diceRed.rollDice();
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -38,11 +79,5 @@ void setup() {
 void loop() {
   //Serial.println(digitalRead(2));
   //dice1.rollDice();
-  Serial.println("antes de Checkbutton");
-  checkButton();
-  Serial.println("despues de Checkbutton");
-  diceRed.turnOffDice();
-  diceGreen.turnOffDice();
-  diceRed.throwDice();
-  diceGreen.throwDice();
+  twoDiceConcurrently();
 }
