@@ -5,16 +5,14 @@
 // diceMiddleLeds=5
 // diceCenterLed=4);
 
+int _buttonGeneral = 2;
 int _diceButton=2;
 int _diceButtonRed=11;
 int _diceButtonGreen=12;
-bool _diceButtonRedRoll = 1;
-bool _diceButtonGreenRoll = 1;
 int _iterateDice[2] = {1,1}; //Red, Green
 int _randomDiceNumber[2] = {0,0}; //Red, Green
 int _buttonStopDicePin[2] = {11,12};
 
-int _buttonGeneral = 2;
 MyDice diceRed(6,3,5,4);
 MyDice diceGreen(7,8,9,10);
 MyDice _AllDice[2] = {diceRed,diceGreen};
@@ -24,9 +22,7 @@ void acknowledgeButtonPress(int diceNumber){
   _AllDice[diceNumber].lightNumber(_randomDiceNumber[diceNumber]);
 }
 
-void checkButton() {
-  delay (50);
-  while (digitalRead(_diceButton) == LOW) {
+void checkDiceStopStartButton(){
     for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
       if (digitalRead(_buttonStopDicePin[diceNumber]) == LOW){
         if (_iterateDice[diceNumber] == 1){
@@ -37,22 +33,18 @@ void checkButton() {
         };  
         acknowledgeButtonPress(diceNumber);
       };
-    };    
+    };      
+}
+
+void checkButton() {
+  delay (50);
+  while (digitalRead(_buttonGeneral) == LOW) {
+    checkDiceStopStartButton();
     delay(100);
   };
   delay (50);
-  while (digitalRead(_diceButton) == HIGH) {
-    for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
-      if (digitalRead(_buttonStopDicePin[diceNumber]) == LOW){
-        if (_iterateDice[diceNumber] == 1){
-          _iterateDice[diceNumber] = 0 ; // 0 means do not roll leave as is    
-        }
-        else {
-          _iterateDice[diceNumber] = 1;          
-        };
-        acknowledgeButtonPress(diceNumber);      
-      };
-    };    
+  while (digitalRead(_buttonGeneral) == HIGH) {
+    checkDiceStopStartButton();  
     delay(100);
   };
   randomSeed(millis());
@@ -77,30 +69,35 @@ void iterateNumbers(){
   };
 }
 
-void throwDice() {
-  //light up dice randomly
-  //turn on dice number
-  int throwTimes = random(1,4);
-  Serial.println("En Throw dice");
-  randomSeed(millis()); //to have different randoms numbers each time the sketch runs
+void assignRandomNumber(){
   for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
     if (_iterateDice[diceNumber] == 1){
       _randomDiceNumber[diceNumber] = random(1,7);
     };
   };
-  for (int i = 0; i < throwTimes; i++){
-    iterateNumbers();
-  };  
+}
+
+void lightDiceRamdomNumber(){
   for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
     if (_iterateDice[diceNumber] == 1){
       _AllDice[diceNumber].lightNumber(_randomDiceNumber[diceNumber]);
     };
   };
+}
+
+void throwDice() {
+  int throwTimes = random(1,4);
+  Serial.println("En Throw dice");
+  randomSeed(millis()); //to have different randoms numbers each time the sketch runs
+  for (int i = 0; i < throwTimes; i++){
+    iterateNumbers();
+  };  
+  assignRandomNumber();
+  lightDiceRamdomNumber();
   delay(20);
 }
 
 void twoDiceConcurrently(){
-
   checkButton();
   throwDice();
 }
