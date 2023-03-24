@@ -86,9 +86,7 @@ void MyDice::iterateLeds(int toLight[], int lenghtToLight) {
 }
 
 void MyDice::flashAllLeds(int flashTimes = 2, int delayLed = 100){
-  for (int i = 0; i < flashTimes; i++){
-    flashLeds(_dice,lenghtDice,flashTimes,delayLed);
-  };
+  flashLeds(_dice,lenghtDice,flashTimes,delayLed);
 }
 
 void MyDice::flashLeds(int toLight[], int lenghtToLight, int flashTimes = 5, int delayLed = 100){
