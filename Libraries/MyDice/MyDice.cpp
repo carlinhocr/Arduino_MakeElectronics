@@ -1,8 +1,7 @@
 #include "Arduino.h"
 #include "MyDice.h"
-MyDice::MyDice(int diceButton, int diceDiagonal1, int diceDiagonal2,
+MyDice::MyDice(int diceDiagonal1, int diceDiagonal2,
         int diceMiddleLeds, int diceCenterLed) {
-        pinMode(diceButton, INPUT_PULLUP);
         pinMode(diceDiagonal1, OUTPUT);
         pinMode(diceDiagonal2, OUTPUT);
         pinMode(diceMiddleLeds, OUTPUT);
@@ -15,7 +14,6 @@ MyDice::MyDice(int diceButton, int diceDiagonal1, int diceDiagonal2,
         lenghtNumber4 =  2;
         lenghtNumber5 =  3;
         lenghtNumber6 =  3;
-        _diceButton = diceButton;
         _diceDiagonal1 = diceDiagonal1;
         _diceDiagonal2 = diceDiagonal2;
         _diceMiddleLeds = diceMiddleLeds;
@@ -62,18 +60,6 @@ void MyDice::throwDice() {
   delay(20);
 }
 
-void MyDice::checkButton() {
-  delay (50);
-  while (digitalRead(_diceButton) == LOW) {
-    delay(100);
-  };
-  delay (50);
-  while (digitalRead(_diceButton) == HIGH) {
-        delay(100);
-  };
-  randomSeed(millis());
-}
-
 void MyDice::turnOffDice(){
   turnOffLeds(_dice,lenghtDice);
 }
@@ -96,6 +82,12 @@ void MyDice::iterateLeds(int toLight[], int lenghtToLight) {
     digitalWrite(toLight[position], HIGH);
     delay(1000);
     digitalWrite(toLight[position], LOW);
+  };
+}
+
+void MyDice::flashAllLeds(int flashTimes = 2, int delayLed = 100){
+  for (int i = 0; i < flashTimes; i++){
+    flashLeds(_dice,lenghtDice,flashTimes,delayLed);
   };
 }
 

@@ -3,14 +3,14 @@
 #include "Arduino.h"
 class MyDice {
 public:
-        MyDice(int diceButton, int diceDiagonal1, int diceDiagonal2,
+        MyDice(int diceDiagonal1, int diceDiagonal2,
         int diceMiddleLeds, int diceCenterLed);
         void rollDice();
         void throwDice();
         void turnOffDice();
         void lightNumber(int number);
+        void flashAllLeds(int flashTimes, int delayLed);
 private:
-        int _diceButton;
         int _diceDiagonal1;
         int _diceDiagonal2;
         int _diceMiddleLeds;

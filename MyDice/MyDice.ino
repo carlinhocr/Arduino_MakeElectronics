@@ -6,50 +6,96 @@
 // diceCenterLed=4);
 
 int _diceButton=2;
+int _diceButtonRed=11;
+int _diceButtonGreen=12;
+bool _diceButtonRedRoll = 1;
+bool _diceButtonGreenRoll = 1;
+int _iterateDice[2] = {1,1}; //Red, Green
+int _randomDiceNumber[2] = {0,0}; //Red, Green
+int _buttonStopDicePin[2] = {11,12};
 
-MyDice diceRed(2,6,3,5,4);
-MyDice diceGreen(2,7,8,9,10);
+int _buttonGeneral = 2;
+MyDice diceRed(6,3,5,4);
+MyDice diceGreen(7,8,9,10);
+MyDice _AllDice[2] = {diceRed,diceGreen};
+
+void acknowledgeButtonPress(int diceNumber){
+  _AllDice[diceNumber].flashAllLeds(2,200);
+  _AllDice[diceNumber].lightNumber(_randomDiceNumber[diceNumber]);
+}
 
 void checkButton() {
   delay (50);
   while (digitalRead(_diceButton) == LOW) {
+    for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
+      if (digitalRead(_buttonStopDicePin[diceNumber]) == LOW){
+        if (_iterateDice[diceNumber] == 1){
+          _iterateDice[diceNumber] = 0 ; // 0 means do not roll leave as is    
+        }
+        else {
+          _iterateDice[diceNumber] = 1;          
+        };  
+        acknowledgeButtonPress(diceNumber);
+      };
+    };    
     delay(100);
   };
   delay (50);
   while (digitalRead(_diceButton) == HIGH) {
-        delay(100);
+    for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
+      if (digitalRead(_buttonStopDicePin[diceNumber]) == LOW){
+        if (_iterateDice[diceNumber] == 1){
+          _iterateDice[diceNumber] = 0 ; // 0 means do not roll leave as is    
+        }
+        else {
+          _iterateDice[diceNumber] = 1;          
+        };
+        acknowledgeButtonPress(diceNumber);      
+      };
+    };    
+    delay(100);
   };
   randomSeed(millis());
 }
 
 void iterateNumbers(){
-  diceRed.turnOffDice();
-  diceGreen.turnOffDice();
-  delay(300);
+  for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
+    if (_iterateDice[diceNumber] == 1){
+      _AllDice[diceNumber].turnOffDice();
+      delay(300);
+    };
+  };
   for (int position = 1; position < 7; position++) {
-    diceRed.lightNumber(position);
-    diceGreen.lightNumber(position);
-    delay(200);
-    diceRed.turnOffDice();
-    diceGreen.turnOffDice();
-    delay(200);
+    for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
+      if (_iterateDice[diceNumber] == 1){
+          _AllDice[diceNumber].lightNumber(position);
+          delay(50);
+          _AllDice[diceNumber].turnOffDice();
+          delay(50);
+      };
+    };
   };
 }
 
 void throwDice() {
   //light up dice randomly
   //turn on dice number
+  int throwTimes = random(1,4);
   Serial.println("En Throw dice");
   randomSeed(millis()); //to have different randoms numbers each time the sketch runs
-  int diceNumberRed = random(1,7);
-  int diceNumberGreen = random(1,7);
-  int throwTimes = random(1,4);
+  for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
+    if (_iterateDice[diceNumber] == 1){
+      _randomDiceNumber[diceNumber] = random(1,7);
+    };
+  };
   for (int i = 0; i < throwTimes; i++){
     iterateNumbers();
-  }  
-  diceRed.lightNumber(diceNumberRed);
-  diceGreen.lightNumber(diceNumberGreen);
-
+  };  
+  for  (int diceNumber = 0; diceNumber < 2; diceNumber ++){
+    if (_iterateDice[diceNumber] == 1){
+      _AllDice[diceNumber].lightNumber(_randomDiceNumber[diceNumber]);
+    };
+  };
   delay(20);
 }
 
@@ -65,6 +111,9 @@ void oneDiceWithButton(){
 
 void setup() {
   // put your setup code here, to run once:
+  pinMode(_buttonGeneral, INPUT_PULLUP);
+  pinMode(_diceButtonRed, INPUT_PULLUP);
+  pinMode(_diceButtonGreen, INPUT_PULLUP);
   Serial.begin(9600);
         // pinMode(7, OUTPUT);
         // pinMode(8, OUTPUT);
